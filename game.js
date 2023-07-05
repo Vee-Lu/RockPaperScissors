@@ -1,8 +1,10 @@
 
 
-// This gets the input buttons
+// This gets the elements needed to display and change the game
 const buttons = document.querySelectorAll(".input");
 const result = document.querySelector(".displayResult");
+const reset = document.querySelector(".resetButton");
+
 
 
 //Create a div element with the class name "score"
@@ -18,7 +20,9 @@ document.querySelector("body").insertBefore(score,document.querySelector(".playe
 let playerScore = 0;
 let cpuScore = 0;
 
-//Button event handler that plays Rock, Paper, Scissors
+/**
+ * Input utton event handler that plays Rock, Paper, Scissors
+ */
 buttons.forEach(button => button.addEventListener("click", function() {
 
     //Get the player's choice by getting the button's inner text
@@ -62,6 +66,17 @@ buttons.forEach(button => button.addEventListener("click", function() {
     }
     
 }));
+
+/**
+ * Reset button event handler that resets everything back to their default values
+ */
+reset.addEventListener("click", function(){
+    score.innerText = "";
+    result.innerText = "Choose Rock, Paper, or Scissors";
+    playerScore = 0;
+    cpuScore = 0;
+   
+});
 
 /**
  * Function that randomly determines what the CPU will choose for Rock, Paper, or Scissors
@@ -133,19 +148,28 @@ function determineWinner(playerSelection, computerSelection){
 
 }
 
+/**
+ * Function that returns the result of the round and why it happened
+ * @param {*} playerSelection, the player's input
+ * @param {*} computerSelection, the computer's input
+ * @returns 
+ */
 function game(playerSelection, computerSelection){
         
         //Get the integer result for the single round
         let result = determineWinner(playerSelection, computerSelection);
 
+        //If the player wins, display the result
         if(result == 1){
             return `You win! ${playerSelection} beats ${computerSelection}`;
            
         }
+        //If the cpu wins, display the result
         else if(result == -1){
             return `You lose! ${computerSelection} beats ${playerSelection}`;
             
         }
+        //If the neither wins, display the result
         else if (result == 0){
             return `It's a tie! Both are ${computerSelection}`;
         }
