@@ -1,4 +1,36 @@
 
+
+/**
+ * This gets the buttons text value so we can pass it as the player's choice
+ */
+const buttons = document.querySelectorAll("button");
+
+//Alternatee one line arrow function
+//buttons.forEach(button => button.addEventListener("click", getPlayerChoice));
+
+buttons.forEach(button => button.addEventListener("click", function() {
+    console.log(this.innerHTML.toLowerCase());
+
+    const playerChoice = this.innerHTML.toLowerCase();
+    const computerChoice = getComputerChoice();
+
+    console.log(`Player: ${playerChoice}`);
+    console.log(`Computer: ${computerChoice}`);
+    
+
+    console.log(playRound(playerChoice, computerChoice));
+}));
+
+//Function to get the text of the button: Rock, Paper, or Scissors
+function getPlayerChoice(){
+    //console.log(this.innerHTML.toLowerCase());
+    return this.innerHTML.toLowerCase();
+}
+
+/**
+ * Function that randomly determines what the CPU will choose for Rock, Paper, or Scissors
+ * @returns Either Rock, Paper, or Scissors
+ */
 function getComputerChoice(){
 
     let choice = Math.floor(Math.random()*3)+1;
@@ -13,6 +45,7 @@ function getComputerChoice(){
     }
    
 }
+
 
 function playRound(playerSelection, computerSelection){
     //If the player chose "Rock"
@@ -69,7 +102,7 @@ function game(){
         alert(`Round ${i+1}`);
 
         //Get the choice for the player and computer
-        let playerSelection = prompt("Rock, Paper, or Scissors?");
+        let playerSelection = getPlayerChoice;
         let computerSelection = getComputerChoice();
         
         //Get the integer result for the single round

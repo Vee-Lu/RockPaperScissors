@@ -1,0 +1,23 @@
+.displayResult {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    margin-top: 100px;
+}
+.playerSelection {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    margin-top: 100px;
+   
+}
+
+button {
+   
+    margin: 30px;
+    padding-left: 10px;
+    padding-right: 10px;
+    Width: 80px;
+}
