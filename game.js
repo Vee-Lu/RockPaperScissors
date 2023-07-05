@@ -1,31 +1,67 @@
 
 
-/**
- * This gets the buttons text value so we can pass it as the player's choice
- */
-const buttons = document.querySelectorAll("button");
+// This gets the input buttons
+const buttons = document.querySelectorAll(".input");
+const result = document.querySelector(".displayResult");
 
-//Alternatee one line arrow function
+
+//Create a div element with the class name "score"
+const score = document.createElement("div");
+score.classList.add("score");
+document.querySelector("body").insertBefore(score,document.querySelector(".playerSelection"));
+
+
+//Alternate one line arrow function
 //buttons.forEach(button => button.addEventListener("click", getPlayerChoice));
 
-buttons.forEach(button => button.addEventListener("click", function() {
-    console.log(this.innerHTML.toLowerCase());
+//Variables to hold player and cpu wins
+let playerScore = 0;
+let cpuScore = 0;
 
-    const playerChoice = this.innerHTML.toLowerCase();
+//Button event handler that plays Rock, Paper, Scissors
+buttons.forEach(button => button.addEventListener("click", function() {
+
+    //Get the player's choice by getting the button's inner text
+    const playerChoice = this.innerHTML;
+    //Gets the computer choice through the getComputerChoice method 
     const computerChoice = getComputerChoice();
 
-    console.log(`Player: ${playerChoice}`);
-    console.log(`Computer: ${computerChoice}`);
+    //If the player score and cpu score is less than 5, we want to play the game since neither have hit 5 wins
+    if(playerScore < 5 && cpuScore < 5){
+
+        //Calls the game() method to determine who won the game and how
+        result.innerText = game(playerChoice,computerChoice);
+
+        //Get the determineWinner method returned number to increment either the player's wins or the cpu's wins
+        if(determineWinner(playerChoice,computerChoice) == 1){
+            playerScore++;
+        }
+
+        else if(determineWinner(playerChoice,computerChoice) == -1){
+            cpuScore++;
+        }
+
+        //Display it throught the div element called "score"
+        score.innerText = `Player: ${playerScore} Computer: ${cpuScore}`;
+
+        //If the player wins, congratulate them, else tell them better luck
+        if(playerScore == 5){
+            score.innerText = "Congratulations! You win! Play a new game?";
+        } 
+
+        else if(cpuScore == 5){
+            score.innerText = "Tough luck! You lose! Want to try again?";
+        }
+
+        
+    }
+
+    //If either the player or cpu reaches 5 wins, tell the player to start a new game
+    else {
+        result.innerText = "The game is over! Please hit rest to start a new game!";
+    }
     
-
-    console.log(playRound(playerChoice, computerChoice));
 }));
-
-//Function to get the text of the button: Rock, Paper, or Scissors
-function getPlayerChoice(){
-    //console.log(this.innerHTML.toLowerCase());
-    return this.innerHTML.toLowerCase();
-}
 
 /**
  * Function that randomly determines what the CPU will choose for Rock, Paper, or Scissors
@@ -46,92 +82,72 @@ function getComputerChoice(){
    
 }
 
-
-function playRound(playerSelection, computerSelection){
+/**
+ * Function that returns an int value based on the result of the game
+ * @param {*} playerSelection - the player's input
+ * @param {*} computerSelection - the computer's input
+ * @returns 
+ */
+function determineWinner(playerSelection, computerSelection){
     //If the player chose "Rock"
-    if(playerSelection.toLowerCase() == "Rock".toLowerCase()){
+    if(playerSelection.toLowerCase() == "rock"){
         
-        if(computerSelection.toLowerCase() == "Rock".toLowerCase()){
+        if(computerSelection.toLowerCase() == "rock"){
             return 0;
         }   
-        else if(computerSelection.toLowerCase() == "Paper".toLowerCase()){
+        else if(computerSelection.toLowerCase() == "paper"){
             return -1;
         }   
-        else if(computerSelection.toLowerCase() == "Scissors".toLowerCase()){
+        else if(computerSelection.toLowerCase() == "scissors"){
             return 1;
         }
        
     }
      //If the player chose "Paper"
-    else if(playerSelection.toLowerCase() == "Paper".toLowerCase()){
+    else if(playerSelection.toLowerCase() == "paper"){
 
-        if(computerSelection.toLowerCase() == "Rock".toLowerCase()){
+        if(computerSelection.toLowerCase() == "rock"){
             return 1;
         }
-        else if(computerSelection.toLowerCase() == "Paper".toLowerCase()){
+        else if(computerSelection.toLowerCase() == "paper"){
             return 0;
         }
-        else if(computerSelection.toLowerCase() == "Scissors".toLowerCase()){
+        else if(computerSelection.toLowerCase() == "scissors"){
             return -1;
         }
     }
      //If the player chose "Scissors"
-    else if(playerSelection.toLowerCase() == "Scissors".toLowerCase()){
+    else if(playerSelection.toLowerCase() == "scissors"){
 
-        if(computerSelection.toLowerCase() == "Rock".toLowerCase()){
+        if(computerSelection.toLowerCase() == "rock"){
             return -1;
         }
-        else if(computerSelection.toLowerCase() == "Paper".toLowerCase()){
+        else if(computerSelection.toLowerCase() == "paper"){
             return 1;
         }
-        else if(computerSelection.toLowerCase() == "Scissors".toLowerCase()){
+        else if(computerSelection.toLowerCase() == "scissors"){
             return 0;
         }
     }
-    else {
-       return "Player choice is invalid. Please try again";
-    }
+   
 
 }
 
-function game(){
-    let playerScore = 0;
-    let cpuScore = 0;
-
-    for(let i = 0; i < 5; i++){
-        alert(`Round ${i+1}`);
-
-        //Get the choice for the player and computer
-        let playerSelection = getPlayerChoice;
-        let computerSelection = getComputerChoice();
+function game(playerSelection, computerSelection){
         
         //Get the integer result for the single round
-        let result = playRound(playerSelection, computerSelection);
+        let result = determineWinner(playerSelection, computerSelection);
 
         if(result == 1){
-            alert(`You win! ${playerSelection} beats ${computerSelection}`);
-            playerScore++;
+            return `You win! ${playerSelection} beats ${computerSelection}`;
+           
         }
         else if(result == -1){
-            alert(`You lose! ${computerSelection} beats ${playerSelection}`);
-            cpuScore++;
+            return `You lose! ${computerSelection} beats ${playerSelection}`;
+            
         }
         else if (result == 0){
-            alert(`It's a tie! Both are ${computerSelection}`);
+            return `It's a tie! Both are ${computerSelection}`;
         }
 
-        alert(`Player: ${playerScore} Computer ${cpuScore}`);
-
-    
-    }
-
-    if(playerScore > cpuScore){
-        alert("Congratulations! You won!");
-    }
-    else if (playerScore < cpuScore){
-        alert("Sorry! Better luck next time!");
-    }
-    else {
-        alert("It's a tie! Rematch?");
-    }
 }

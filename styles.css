@@ -3,21 +3,33 @@
     justify-content: center;
     align-items: center;
 
-    margin-top: 100px;
+    margin-top: 80px;
 }
 .playerSelection {
     display: flex;
     justify-content: center;
     align-items: center;
 
-    margin-top: 100px;
+    margin-top: 200px;
    
 }
 
 button {
-   
     margin: 30px;
     padding-left: 10px;
     padding-right: 10px;
-    Width: 80px;
+    width: 80px;
+}
+
+.reset {
+    display: flex;
+    justify-content: center;
+   margin-top: -10px;
+}
+
+.score{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
 }
